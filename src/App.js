@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import FriendCard from "./components/FriendCard";
+import CharactersCard from "./components/charactersCard";
 import Wrapper from "./components/Wrapper";
-import Title from "./components/Title";
-import Score from "./components/Score";
-import Alert from "./components/Alert";
-import friends from "./friends.json";
+import characters from "./characters.json";
 
 class App extends Component {
 
-  // Setting this.state.friends to the friends json array
   state = {
-    friends,
+    characters,
     clickedOn: [],
     score: 0,
     highscore: 0,
@@ -46,7 +42,7 @@ class App extends Component {
 
     if (this.validation(id)) {
       console.log("Already clicked on")
-      const friends = this.shuffle(this.state.friends)
+      const characters = this.shuffle(this.state.characters)
       let highscore = this.state.highscore
 
 
@@ -57,17 +53,17 @@ class App extends Component {
       this.setState({  
         score: 0,
         clickedOn: [],
-        friends,
+        characters,
         highscore,
         alert: "You have guessed incorrectly"
       })
     } else {
       let clickedOnArray = [...this.state.clickedOn, id];
-      const friends = this.shuffle(this.state.friends)
+      const characters = this.shuffle(this.state.characters)
 
       let score = this.state.score + 1
       this.setState({ 
-        friends,
+        characters,
         clickedOn : clickedOnArray,
         score,
         alert: "You have guessed correctly"
@@ -83,17 +79,32 @@ class App extends Component {
     console.log(this.state)
     return (
       <Wrapper>
-        <Title>Friends List</Title>
-        <Score>Score : {this.state.score} | Highscore: {this.state.highscore}</Score>
-        <Alert>{this.state.alert}</Alert>
-        {this.state.friends.map(friend => (
-          <FriendCard
+      <header className="header">
+        <h1>Clicky Game</h1>
+        <h2>Super Smash Bros. Edition</h2>
+      </header>
+
+      <section className="score-panel">
+        <h3>Score Panel</h3>
+        <div className="score-container">
+        Score : {this.state.score} | Highscore: {this.state.highscore}
+        </div>
+        {this.state.alert}
+      </section>
+        <ul className="deck">
+        {this.state.characters.map(characters => (
+          <CharactersCard
             removeFriend={this.removeFriend}
-            id={friend.id}
-            key={friend.id}
-            image={friend.image}
+            id={characters.id}
+            key={characters.id}
+            image={characters.image}
           />
         ))}
+        </ul>
+
+      <footer className="footer">
+        <p><strong>Copyright @Phuoc Phan - </strong></p>
+      </footer>
       </Wrapper>
 
       
